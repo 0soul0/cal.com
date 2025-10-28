@@ -73,6 +73,11 @@ export type BookerStore = {
    */
   month: string | null;
   setMonth: (month: string | null) => void;
+    /**
+   * Current option which user selected.
+   */
+  option: string | null;
+  setOption: (info: string | null) => void;
   /**
    * Current state of the booking process
    * the user is currently in. See enum for possible values.
