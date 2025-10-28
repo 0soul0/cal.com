@@ -64,6 +64,7 @@ export const BookEventForm = ({
   confirmButtonDisabled,
   classNames,
   timeslot,
+  onNext = null,
 }: Omit<BookEventFormProps, "event"> & {
   eventQuery: {
     isError: boolean;
@@ -79,9 +80,16 @@ export const BookEventForm = ({
   const isInstantMeeting = useBookerStoreContext((state) => state.isInstantMeeting);
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const { timeFormat, timezone } = useBookerTime();
-
+  
   const [responseVercelIdHeader] = useState<string | null>(null);
   const { t, i18n } = useLocale();
+
+  console.log("param bookingData:", bookingData);
+  console.log("param rescheduleUid:", rescheduleUid);
+  console.log("param username:", username);
+  console.log("param isInstantMeeting:", isInstantMeeting);
+  console.log("param isInstantMeeting:", isInstantMeeting);
+  console.log("param isPlatformBookerEmbed:", isPlatformBookerEmbed);
 
   const isPaidEvent = useMemo(() => {
     if (!eventType?.price) return false;
@@ -240,6 +248,16 @@ export const BookEventForm = ({
                   data-testid="back"
                   className={classNames?.backButton}>
                   {t("back")}
+                </Button>
+              )}
+              {!!onNext && (
+                <Button
+                  color="minimal"
+                  type="button"
+                  onClick={onNext}
+                  data-testid="next"
+                  className={classNames?.backButton}>
+                  {t("next")}
                 </Button>
               )}
 

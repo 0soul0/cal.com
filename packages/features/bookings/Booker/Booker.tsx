@@ -90,7 +90,11 @@ const BookerComponent = ({
     (state) => [state.state, state.setState],
     shallow
   );
-
+  const [infoState, setInfoState] = useBookerStoreContext(
+    (state) => [state.state, state.setState],
+    shallow
+  );
+  
   const selectedDate = useBookerStoreContext((state) => state.selectedDate);
 
   const {
@@ -212,11 +216,12 @@ const BookerComponent = ({
 
   useEffect(() => {
     if (event.isPending) return setBookerState("loading");
-    if (!selectedDate) return setBookerState("selecting_date");
-    if (!selectedTimeslot) return setBookerState("selecting_time");
-    const isSkipConfirmStepSupported = !isInstantMeeting && layout !== BookerLayouts.WEEK_VIEW;
+        const isSkipConfirmStepSupported = !isInstantMeeting && layout !== BookerLayouts.WEEK_VIEW;
     if (selectedTimeslot && skipConfirmStep && isSkipConfirmStepSupported)
       return setBookerState("selecting_time");
+    if (!infoState) return setBookerState("booking");
+    if (!selectedDate) return setBookerState("selecting_date");
+    if (!selectedTimeslot) return setBookerState("selecting_time");
     return setBookerState("booking");
   }, [event, selectedDate, selectedTimeslot, setBookerState, skipConfirmStep, layout, isInstantMeeting]);
 
@@ -246,16 +251,19 @@ const BookerComponent = ({
         key={key}
         timeslot={selectedTimeslot}
         shouldRenderCaptcha={shouldRenderCaptcha}
-        onCancel={() => {
-          setSelectedTimeslot(null);
-          // Temporarily allow disabling it, till we are sure that it doesn't cause any significant load on the system
-          if (PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM) {
-            // Ensures that user has latest available slots when they want to re-choose from the slots
-            schedule?.invalidate();
-          }
-          if (seatedEventData.bookingUid) {
-            setSeatedEventData({ ...seatedEventData, bookingUid: undefined, attendees: undefined });
-          }
+        // onCancel={() => {
+        //   setSelectedTimeslot(null);
+        //   // Temporarily allow disabling it, till we are sure that it doesn't cause any significant load on the system
+        //   if (PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM) {
+        //     // Ensures that user has latest available slots when they want to re-choose from the slots
+        //     schedule?.invalidate();
+        //   }
+        //   if (seatedEventData.bookingUid) {
+        //     setSeatedEventData({ ...seatedEventData, bookingUid: undefined, attendees: undefined });
+        //   }
+        // }}
+        onNext={() => {
+          setInfoState("true")
         }}
         onSubmit={() => (renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail())}
         errorRef={bookerFormErrorRef}
