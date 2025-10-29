@@ -98,6 +98,7 @@ const BookerComponent = ({
     shallow
   );
   // setInfoState("false")
+  // setInfoState("false")
   const selectedDate = useBookerStoreContext((state) => state.selectedDate);
 
   const {
@@ -267,7 +268,6 @@ const BookerComponent = ({
         // }}
         onNext={() => {
           setNextPage(true);
-          setBookerState("selecting_time");
         }}
         onSubmit={() => (renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail())}
         errorRef={bookerFormErrorRef}
