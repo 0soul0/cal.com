@@ -73,6 +73,17 @@ export type BookerStore = {
    */
   month: string | null;
   setMonth: (month: string | null) => void;
+    /**
+   * Current option which user selected.
+   */
+  option: string | null;
+  setOption: (info: string | null) => void;
+    /**
+   * Current option which user selected.
+   */
+  nextPage: boolean | false;
+  setNextPage: (nextPage: boolean) => void;
+
   /**
    * Current state of the booking process
    * the user is currently in. See enum for possible values.
@@ -187,6 +198,10 @@ export const createBookerStore = () =>
   createWithEqualityFn<BookerStore>((set, get) => ({
     state: "loading",
     setState: (state: BookerState) => set({ state }),
+    nextPage: false,
+    setNextPage: (nextPage: boolean) => set({ nextPage }),
+    option: null,
+    setOption: (option: string | null) => set({ option }),
     layout: BookerLayouts.MONTH_VIEW,
     setLayout: (layout: BookerLayout) => {
       // If we switch to a large layout and don't have a date selected yet,

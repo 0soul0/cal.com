@@ -19,8 +19,10 @@ import { scrollIntoViewSmooth } from "@calcom/lib/browser/browser.utils";
 import { PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM } from "@calcom/lib/constants";
 import { CLOUDFLARE_SITE_ID, CLOUDFLARE_USE_TURNSTILE_IN_BOOKER } from "@calcom/lib/constants";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import classNames from "@calcom/ui/classNames";
+import { Button } from "@calcom/ui/components/button";
 import { UnpublishedEntity } from "@calcom/ui/components/unpublished-entity";
 
 import { VerifyCodeDialog } from "../components/VerifyCodeDialog";
@@ -84,17 +86,18 @@ const BookerComponent = ({
   roundRobinHideOrgAndTeam,
   showNoAvailabilityDialog,
 }: BookerProps & WrappedBookerProps) => {
+  const { t, i18n } = useLocale();
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const [bookerState, setBookerState] = useBookerStoreContext(
     (state) => [state.state, state.setState],
     shallow
   );
-  const [infoState, setInfoState] = useBookerStoreContext(
-    (state) => [state.state, state.setState],
+  const [nextPage, setNextPage] = useBookerStoreContext(
+    (state) => [state.nextPage, state.setNextPage],
     shallow
   );
-  
+  // setInfoState("false")
   const selectedDate = useBookerStoreContext((state) => state.selectedDate);
 
   const {
@@ -216,14 +219,15 @@ const BookerComponent = ({
 
   useEffect(() => {
     if (event.isPending) return setBookerState("loading");
-        const isSkipConfirmStepSupported = !isInstantMeeting && layout !== BookerLayouts.WEEK_VIEW;
+    const isSkipConfirmStepSupported = !isInstantMeeting && layout !== BookerLayouts.WEEK_VIEW;
+    console.log("param  nextPage", nextPage);
     if (selectedTimeslot && skipConfirmStep && isSkipConfirmStepSupported)
       return setBookerState("selecting_time");
-    if (!infoState) return setBookerState("booking");
+    if (!nextPage) return setBookerState("booking");
     if (!selectedDate) return setBookerState("selecting_date");
     if (!selectedTimeslot) return setBookerState("selecting_time");
-    return setBookerState("booking");
-  }, [event, selectedDate, selectedTimeslot, setBookerState, skipConfirmStep, layout, isInstantMeeting]);
+    return setBookerState("selecting_time");
+  }, [event,nextPage, selectedDate, selectedTimeslot, setBookerState, skipConfirmStep, layout, isInstantMeeting]);
 
   const unavailableTimeSlots = isQuickAvailabilityCheckFeatureEnabled
     ? allSelectedTimeslots.filter((slot) => {
@@ -244,7 +248,6 @@ const BookerComponent = ({
   const onSubmit = (timeSlot?: string) =>
     renderConfirmNotVerifyEmailButtonCond ? handleBookEvent(timeSlot) : handleVerifyEmail();
 
-
   const EventBooker = useMemo(() => {
     return bookerState === "booking" ? (
       <BookEventForm
@@ -263,7 +266,8 @@ const BookerComponent = ({
         //   }
         // }}
         onNext={() => {
-          setInfoState("true")
+          setNextPage(true);
+          setBookerState("selecting_time");
         }}
         onSubmit={() => (renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail())}
         errorRef={bookerFormErrorRef}
@@ -303,6 +307,7 @@ const BookerComponent = ({
     instantVideoMeetingUrl,
     bookerState,
     bookingForm,
+    nextPage,
     errors,
     event,
     expiryTime,
@@ -317,6 +322,7 @@ const BookerComponent = ({
     seatedEventData,
     setSeatedEventData,
     setSelectedTimeslot,
+    setNextPage,
     isPlatform,
     shouldRenderCaptcha,
     isVerificationCodeSending,
@@ -543,8 +549,20 @@ const BookerComponent = ({
           isScheduleLoading={schedule.isLoading}
           onButtonClick={() => {
             setDayCount(null);
-          }}
-        />
+          }}></HavingTroubleFindingTime>
+
+        {bookerState !== "booking" && (
+          <Button
+            color="minimal"
+            type="button"
+            onClick={() => {
+              setNextPage(false);
+            }}
+            data-testid="back"
+            className={classNames?.backButton}>
+            {t("back")}
+          </Button>
+        )}
 
         {bookerState !== "booking" &&
           event.data?.showInstantEventConnectNowModal &&

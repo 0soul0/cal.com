@@ -5217,6 +5217,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@epic-web/invariant@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@epic-web/invariant@npm:1.0.0"
+  checksum: 58e2029bd3362751f5afac2b3bdb6b4f6e38f888af7ee93a0d76e18c879586b130bf3b14588364fcf04a1423b5b917eacad5717d61224daac64350c7ae5fc95e
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -7799,6 +7806,22 @@ __metadata:
   version: 1.2.0
   resolution: "@ioredis/commands@npm:1.2.0"
   checksum: 9b20225ba36ef3e5caf69b3c0720597c3016cc9b1e157f519ea388f621dd9037177f84cfe7e25c4c32dad7dd90c70ff9123cd411f747e053cf292193c9c461e2
+  languageName: node
+  linkType: hard
+
+"@isaacs/balanced-match@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@isaacs/balanced-match@npm:4.0.1"
+  checksum: 102fbc6d2c0d5edf8f6dbf2b3feb21695a21bc850f11bc47c4f06aa83bd8884fde3fe9d6d797d619901d96865fdcb4569ac2a54c937992c48885c5e3d9967fe8
+  languageName: node
+  linkType: hard
+
+"@isaacs/brace-expansion@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@isaacs/brace-expansion@npm:5.0.0"
+  dependencies:
+    "@isaacs/balanced-match": ^4.0.1
+  checksum: d7a3b8b0ddbf0ccd8eeb1300e29dd0a0c02147e823d8138f248375a365682360620895c66d113e05ee02389318c654379b0e538b996345b83c914941786705b1
   languageName: node
   linkType: hard
 
@@ -22149,6 +22172,7 @@ __metadata:
     c8: ^7.13.0
     checkly: latest
     city-timezones: ^1.2.1
+    cross-env: ^10.1.0
     date-fns-tz: ^3.2.0
     dotenv-checker: ^1.1.5
     dotenv-cli: ^10.0.0
@@ -22166,6 +22190,7 @@ __metadata:
     prettier: ^2.8.6
     prismock: 1.35.3
     resize-observer-polyfill: ^1.5.1
+    rimraf: ^6.0.1
     tsc-absolute: ^1.0.0
     turbo: ^2.5.5
     typescript: 5.9.0-beta
@@ -23906,6 +23931,19 @@ __metadata:
     "@types/luxon": ~3.4.0
     luxon: ~3.4.0
   checksum: d98ee5297543c138221d96dd49270bf6576db80134e6041f4ce4a3c0cb6060863d76910209b34fee66fbf134461449ec3bd283d6a76d1c50da220cde7fc10c65
+  languageName: node
+  linkType: hard
+
+"cross-env@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "cross-env@npm:10.1.0"
+  dependencies:
+    "@epic-web/invariant": ^1.0.0
+    cross-spawn: ^7.0.6
+  bin:
+    cross-env: dist/bin/cross-env.js
+    cross-env-shell: dist/bin/cross-env-shell.js
+  checksum: bd7e013603df8dc3a5a2d259a84f43a62114486e141395668ea46e9c5d154b312ebf26486f30699ffe7ff8f275331e00e61d7a720d1593185fce685b0f1c3d9f
   languageName: node
   linkType: hard
 
@@ -28426,6 +28464,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"foreground-child@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "foreground-child@npm:3.3.1"
+  dependencies:
+    cross-spawn: ^7.0.6
+    signal-exit: ^4.0.1
+  checksum: b2c1a6fc0bf0233d645d9fefdfa999abf37db1b33e5dab172b3cbfb0662b88bfbd2c9e7ab853533d199050ec6b65c03fcf078fc212d26e4990220e98c6930eef
+  languageName: node
+  linkType: hard
+
 "forever-agent@npm:~0.6.1":
   version: 0.6.1
   resolution: "forever-agent@npm:0.6.1"
@@ -29437,6 +29485,22 @@ __metadata:
   bin:
     glob: dist/esm/bin.mjs
   checksum: 0bc725de5e4862f9f387fd0f2b274baf16850dcd2714502ccf471ee401803997983e2c05590cb65f9675a3c6f2a58e7a53f9e365704108c6ad3cbf1d60934c4a
+  languageName: node
+  linkType: hard
+
+"glob@npm:^11.0.0":
+  version: 11.0.3
+  resolution: "glob@npm:11.0.3"
+  dependencies:
+    foreground-child: ^3.3.1
+    jackspeak: ^4.1.1
+    minimatch: ^10.0.3
+    minipass: ^7.1.2
+    package-json-from-dist: ^1.0.0
+    path-scurry: ^2.0.0
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 65ddc1e3c969e87999880580048763cc8b5bdd375930dd43b8100a5ba481d2e2563e4553de42875790800c602522a98aa8d3ed1c5bd4d27621609e6471eb371d
   languageName: node
   linkType: hard
 
@@ -32420,6 +32484,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jackspeak@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "jackspeak@npm:4.1.1"
+  dependencies:
+    "@isaacs/cliui": ^8.0.2
+  checksum: daca714c5adebfb80932c0b0334025307b68602765098d73d52ec546bc4defdb083292893384261c052742255d0a77d8fcf96f4c669bcb4a99b498b94a74955e
+  languageName: node
+  linkType: hard
+
 "jake@npm:^10.8.5":
   version: 10.8.7
   resolution: "jake@npm:10.8.7"
@@ -34543,6 +34616,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^11.0.0":
+  version: 11.2.2
+  resolution: "lru-cache@npm:11.2.2"
+  checksum: 052b3d0b81a02dd017e8b6d82422bed273732c89c9c63762f538e0a75b7018247896b365c19d9392cc7de9c6a304cde3ac11eb7376f96a4885d0ab32b5c46d5b
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^5.1.1":
   version: 5.1.1
   resolution: "lru-cache@npm:5.1.1"
@@ -35953,6 +36033,15 @@ __metadata:
   dependencies:
     brace-expansion: ^2.0.1
   checksum: 253487976bf485b612f16bf57463520a14f512662e592e95c571afdab1442a6a6864b6c88f248ce6fc4ff0b6de04ac7aa6c8bb51e868e99d1d65eb0658a708b5
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^10.0.3":
+  version: 10.0.3
+  resolution: "minimatch@npm:10.0.3"
+  dependencies:
+    "@isaacs/brace-expansion": ^5.0.0
+  checksum: 20bfb708095a321cb43c20b78254e484cb7d23aad992e15ca3234a3331a70fa9cd7a50bc1a7c7b2b9c9890c37ff0685f8380028fcc28ea5e6de75b1d4f9374aa
   languageName: node
   linkType: hard
 
@@ -38969,6 +39058,16 @@ __metadata:
     lru-cache: ^10.2.0
     minipass: ^5.0.0 || ^6.0.2 || ^7.0.0
   checksum: 890d5abcd593a7912dcce7cf7c6bf7a0b5648e3dee6caf0712c126ca0a65c7f3d7b9d769072a4d1baf370f61ce493ab5b038d59988688e0c5f3f646ee3c69023
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "path-scurry@npm:2.0.0"
+  dependencies:
+    lru-cache: ^11.0.0
+    minipass: ^7.1.2
+  checksum: 9953ce3857f7e0796b187a7066eede63864b7e1dfc14bf0484249801a5ab9afb90d9a58fc533ebb1b552d23767df8aa6a2c6c62caf3f8a65f6ce336a97bbb484
   languageName: node
   linkType: hard
 
@@ -42543,6 +42642,18 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "rimraf@npm:6.0.1"
+  dependencies:
+    glob: ^11.0.0
+    package-json-from-dist: ^1.0.0
+  bin:
+    rimraf: dist/esm/bin.mjs
+  checksum: 8ba5b84131c1344e9417cb7e8c05d8368bb73cbe5dd4c1d5eb49fc0b558209781658d18c450460e30607d0b7865bb067482839a2f343b186b07ae87715837e66
   languageName: node
   linkType: hard
 

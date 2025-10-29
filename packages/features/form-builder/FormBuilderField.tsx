@@ -25,7 +25,7 @@ const renderLabel = (field: Partial<RhfFormField>) => {
   if (field.labelAsSafeHtml) {
     return (
       <span
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{ __html: markdownToSafeHTML(field.labelAsSafeHtml) }}
       />
     );
@@ -95,6 +95,7 @@ export const FormBuilderField = ({
                 readOnly={readOnly || shouldBeDisabled}
                 setValue={(val: unknown) => {
                   onChange(val);
+                  console.log("field changed:", field.name, val);
                 }}
                 noLabel={noLabel}
                 translatedDefaultLabel={translatedDefaultLabel}

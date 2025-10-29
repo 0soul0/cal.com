@@ -2,6 +2,7 @@
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { AnimatePresence, m } from "framer-motion";
 import { useMemo } from "react";
+import { shallow } from "zustand/shallow";
 
 import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
 import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
@@ -54,6 +55,7 @@ export type AvailableTimesProps = {
 } & Omit<SlotItemProps, "slot">;
 
 type SlotItemProps = {
+  active: boolean;
   slot: Slot;
   seatsPerTimeSlot?: number | null;
   selectedSlots?: string[];
@@ -79,6 +81,7 @@ type SlotItemProps = {
 };
 
 const SlotItem = ({
+  active,
   slot,
   seatsPerTimeSlot,
   selectedSlots,
@@ -149,6 +152,7 @@ const SlotItem = ({
   };
 
   const isTimeslotUnavailable = unavailableTimeSlots.includes(slot.time);
+  console.log("active:", active);
   return (
     <AnimatePresence>
       <div className="flex gap-2">
@@ -173,7 +177,8 @@ const SlotItem = ({
             selectedSlots?.includes(slot.time) && "border-brand-default",
             `${customClassNames}`
           )}
-          color="secondary">
+      
+          color={active?"active":"secondary"}>
           <div className="flex items-center gap-2">
             {!hasTimeSlots && overlayCalendarToggled && (
               <span
@@ -267,7 +272,13 @@ export const AvailableTimes = ({
   ...props
 }: AvailableTimesProps) => {
   const { t } = useLocale();
-
+  const [selectedTimeslot] = useBookerStoreContext((state) => [state.selectedTimeslot], shallow);
+  const isActive = (time: string) => {
+    if (selectedTimeslot === time) {
+      return true;
+    }
+    return false;
+  };
   const oooAllDay = slots.every((slot) => slot.away);
   if (oooAllDay) {
     return <OOOSlot {...slots[0]} />;
@@ -292,8 +303,9 @@ export const AvailableTimes = ({
         )}
         {oooBeforeSlots && !oooAfterSlots && <OOOSlot {...slots[0]} />}
         {slots.map((slot) => {
+          console.log("slot:", slot);
           if (slot.away) return null;
-          return <SlotItem key={slot.time} slot={slot} {...props} />;
+          return <SlotItem active={isActive(slot.time)} key={slot.time} slot={slot} {...props} />;
         })}
         {oooAfterSlots && !oooBeforeSlots && <OOOSlot {...slots[slots.length - 1]} className="pb-0" />}
       </div>
